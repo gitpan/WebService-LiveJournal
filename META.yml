@@ -1,0 +1,31 @@
+---
+abstract: 'Interface to the LiveJournal API'
+author:
+  - 'Graham Ollis <plicease@cpan.org>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: WebService-LiveJournal
+requires:
+  Digest::MD5: 0
+  Exporter: 0
+  HTTP::Cookies: 0
+  RPC::XML: 0
+  RPC::XML::Client: 0
+  RPC::XML::ParserFactory: 0
+  base: 0
+  constant: 0
+  overload: 0
+  perl: v5.10.0
+resources:
+  bugtracker: https://github.com/plicease/webservice-livejournal/issues
+  homepage: http://perl.wdlabs.com/WebService-LiveJournal/
+  repository: git://github.com/plicease/webservice-livejournal.git
+version: 0.01

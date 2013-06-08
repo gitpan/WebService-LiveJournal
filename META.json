@@ -1,0 +1,56 @@
+{
+   "abstract" : "Interface to the LiveJournal API",
+   "author" : [
+      "Graham Ollis <plicease@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "WebService-LiveJournal",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Digest::MD5" : "0",
+            "Exporter" : "0",
+            "HTTP::Cookies" : "0",
+            "RPC::XML" : "0",
+            "RPC::XML::Client" : "0",
+            "RPC::XML::ParserFactory" : "0",
+            "base" : "0",
+            "constant" : "0",
+            "overload" : "0",
+            "perl" : "v5.10.0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/plicease/webservice-livejournal/issues"
+      },
+      "homepage" : "http://perl.wdlabs.com/WebService-LiveJournal/",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/plicease/webservice-livejournal.git",
+         "web" : "https://github.com/plicease/webservice-livejournal"
+      }
+   },
+   "version" : "0.01"
+}
+
