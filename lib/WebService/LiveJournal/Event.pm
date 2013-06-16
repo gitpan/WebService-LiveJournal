@@ -7,7 +7,7 @@ use WebService::LiveJournal::Thingie;
 our @ISA = qw/ WebService::LiveJournal::Thingie /;
 
 # ABSTRACT: LiveJournal event class
-our $VERSION = '0.01'; # VERSION
+our $VERSION = '0.02'; # VERSION
 
 
 # crib sheet based on stuff i read in the doco may be
@@ -183,6 +183,9 @@ sub update
     return $self->postevent;
   }
 }
+
+
+sub save { shift->update(@_) }
 
 
 sub delete
@@ -472,7 +475,7 @@ WebService::LiveJournal::Event - LiveJournal event class
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -615,6 +618,10 @@ Returns true on success.
 
 This method signals an error depending on the interface
 selected by throwing an exception or returning undef.
+
+=head2 $event-E<gt>save
+
+An alias for update.
 
 =head2 $event-E<gt>delete
 

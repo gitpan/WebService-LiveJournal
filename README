@@ -2,7 +2,7 @@ NAME
     WebService::LiveJournal - Interface to the LiveJournal API
 
 VERSION
-    version 0.01
+    version 0.02
 
 SYNOPSIS
     new interface
@@ -172,6 +172,63 @@ METHODS
 
     This method signals an error depending on the interface selected by
     throwing an exception or returning undef.
+
+  $client->sync_items( [ last_sync => $time ], $cb )
+    Fetch all of the items which have been created/modified since the last
+    sync. If "last_sync => $time" is not provided then it will fetch all
+    events. For each item that has been changed it will call the code
+    reference $cb with three arguments:
+
+     $cb->($action, $type, $id)
+
+    action
+        One of "create" or "update"
+
+    type
+        For "events" (journal entries) this is "L"
+
+    id  The internal LiveJournal server id for the item. An integer. For
+        events, the actual event can be fetched using the "get_event"
+        method.
+
+    If the callback throws an exception, then no more entries will be
+    processed. If the callback does not throw an exception, then the next
+    item will be processed.
+
+    This method returns the time of the last entry successfully processed,
+    which can be passed into "sync_item" the next time to only get the items
+    that have changed since the first time.
+
+    Here is a broad example:
+
+     # first time:
+     my $time = $client->sync_items(sub {
+       my($action, $type, $id) = @_;
+       if($type eq 'L')
+       {
+         my $event = $client->get_item($id);
+         # ...
+         if(error condition)
+         {
+           die 'error happened';
+         }
+       }
+     });
+ 
+     # if an error happened during the sync
+     my $error = $client->error;
+ 
+     # next time:
+     $time = $client->sync_items(last_sync => $time, sub {
+       ...
+     });
+
+    Because the "syncitems" rpc that this method depends on can make several
+    requests before it completes it can fail half way through. If this
+    happens, you can restart where the last successful item was processed by
+    passing the return value back into "sync_items" again. You can tell that
+    "sync_item" completed without error because the "$client->error"
+    accessor should return a false value.
 
   $client->get_friends( %options )
     Returns friend information associated with the account with which you

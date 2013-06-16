@@ -1,3 +1,4 @@
+.travis.yml
 Changes
 INSTALL
 LICENSE
@@ -30,6 +31,7 @@ t/live-getevents.t
 t/live-login.t
 t/live-picture.t
 t/live-postevent.t
+t/live-syncitems.t
 t/live-tag.t
 t/use.t
 xt/release/build_environment.t
