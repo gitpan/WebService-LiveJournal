@@ -9,9 +9,9 @@ Makefile.PL
 README
 README.pod
 dist.ini
-eg/login.pl
-eg/post.pl
-eg/remove_all_entries.pl
+example/login.pl
+example/post.pl
+example/remove_all_entries.pl
 inc/DoubleDoc.pm
 lib/WebService/LiveJournal.pm
 lib/WebService/LiveJournal/Client.pm

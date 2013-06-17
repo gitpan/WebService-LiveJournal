@@ -29,4 +29,4 @@ resources:
   bugtracker: https://github.com/plicease/webservice-livejournal/issues
   homepage: http://perl.wdlabs.com/WebService-LiveJournal/
   repository: git://github.com/plicease/webservice-livejournal.git
-version: 0.02
+version: 0.03

@@ -1,4 +1,7 @@
 Revision history for WebService-LiveJournal
 
+0.03      2013-06-17 06:33:58 America/New_York
+  - Documentation
+
 0.02      2013-06-16 12:48:49 EST5EDT
   - added sync_items method

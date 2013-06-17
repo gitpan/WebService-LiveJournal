@@ -7,7 +7,7 @@ use WebService::LiveJournal::Event;
 our @ISA = qw/ WebService::LiveJournal::List /;
 
 # ABSTRACT: List of LiveJournal events
-our $VERSION = '0.02'; # VERSION
+our $VERSION = '0.03'; # VERSION
 
 
 sub init
@@ -54,7 +54,7 @@ WebService::LiveJournal::EventList - List of LiveJournal events
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
