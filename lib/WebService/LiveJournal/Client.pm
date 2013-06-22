@@ -12,10 +12,9 @@ use WebService::LiveJournal::FriendGroupList;
 use WebService::LiveJournal::Event;
 use WebService::LiveJournal::EventList;
 use HTTP::Cookies;
-use constant DEBUG => 0;
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 
 my $zero = new RPC::XML::int(0);
@@ -307,6 +306,50 @@ sub get_friend_groups
 sub getfriendgroups { shift->get_friend_groups(@_) }
 
 
+sub console_command
+{
+  my $self = shift;
+  
+  my $response = $self->send_request('consolecommand',
+    commands => RPC::XML::array->new(
+      RPC::XML::array->new(
+        map { RPC::XML::string->new($_) } @_
+      ),
+    ),
+  );
+  return unless defined $response;
+  return $response->value->{results}->[0]->{output};
+}
+
+
+sub batch_console_commands
+{
+  my $self = shift;
+  my @commands;
+  my @cb;
+  for(0..$#_)
+  {
+    if($_ % 2)
+    { push @cb, $_[$_] }
+    else
+    { push @commands, RPC::XML::array->new(map { RPC::XML::string->new($_) } @{ $_[$_] }) }
+  }
+  
+  my $response = $self->send_request('consolecommand',
+    commands => RPC::XML::array->new(@commands)
+  );
+  return unless defined $response;
+  
+  foreach my $output (map { $_->{output} } @{ $response->value->{results} })
+  {
+    my $cb = shift @cb;
+    $cb->(@$output);
+  }
+  
+  return 1;
+}
+
+
 sub set_cookie
 {
   my $self = shift;
@@ -334,13 +377,6 @@ sub send_request
   my $count = $self->{count} || 1;
   my $procname = shift;
         
-        #if(DEBUG)
-        #{
-        #  my %args = @_;
-        #  %args = map { ($_ => $args{$_}->value) } keys %args;
-        #  #say Dump({ request => { $procname => \%args } });
-        #}
-  
   my @challenge;
   if($self->{mode} eq 'challenge')
   {
@@ -372,18 +408,12 @@ sub send_request
 
     # this is where we fall through down to from above
     my $auth_challenge = $response->value->{challenge};
-    #print "challenge = $auth_challenge\n";
     my $auth_response = md5_hex($auth_challenge, md5_hex($self->{password}));
     @challenge = (
       auth_method => $challenge,
       auth_challenge => new RPC::XML::string($auth_challenge),
       auth_response => new RPC::XML::string($auth_response),
     );
-    #print "challenge\n";
-  }
-  else
-  {
-    #print "cookie\n";
   }
 
   my $request = new RPC::XML::request(
@@ -399,10 +429,6 @@ sub send_request
   my $response = $self->{client}->send_request($request);
   if(ref $response)
   {
-                #if(DEBUG)
-                #{
-                #  say Dump({ response => $response->value });
-                #}
     if($response->is_fault)
     {
       my $string = $response->value->{faultString};
@@ -415,10 +441,6 @@ sub send_request
   }
   else
   {
-                #if(DEBUG)
-                #{
-                #  say Dump({ error => $response });
-                #}
     if($count < 5 && $response =~ /HTTP server error: Method Not Allowed/i)
     {
       $self->{count} = $count+1;
@@ -567,7 +589,7 @@ WebService::LiveJournal::Client - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -911,6 +933,42 @@ Returns your friend groups.  This comes as an instance of
 L<WebService::LiveJournal::FriendGroupList> that contains
 zero or more instances of L<WebService::LiveJournal::FriendGroup>.
 
+=head2 $client-E<gt>console_command( $command, @arguments )
+
+Execute the given console command with the given arguments on the
+LiveJournal server.  Returns the output as a list reference.
+Each element in the list represents a line out output and consists
+of a list reference containing the type of output and the text
+of the output.  For example:
+
+ my $ret = $client->console_command( 'print', 'hello world' );
+
+returns:
+
+ [
+   [ 'info',    "Welcome to 'print'!" ],
+   [ 'success', "hello world" ],
+ ]
+
+=head2 $client-E<gt>batch_console_commands( $command1, $callback, [ $command2, $callback, [ ... ] )
+
+Execute a list of commands on the LiveJournal server in one request. Each command is a list reference. Each callback 
+associated with each command will be called with the results of that command (in the same format returned by 
+C<console_command> mentioned above, except it is passed in as a list instead of a list reference).  Example:
+
+ $client->batch_console_commands(
+   [ 'print', 'something to print' ],
+   sub {
+     my @output = @_;
+     ...
+   },
+   [ 'print', 'something else to print' ],
+   sub {
+     my @output = @_;
+     ...
+   },
+ );
+
 =head2 $client-E<gt>set_cookie( $key => $value )
 
 This method allows you to set a cookie for the appropriate security and expiration information.
@@ -958,7 +1016,7 @@ LiveJournal server:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "user: ";
  my $user = <STDIN>;
@@ -989,7 +1047,7 @@ LiveJournal:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "user: ";
  my $user = <STDIN>;
@@ -1031,7 +1089,7 @@ entries are removed they cannot be brought back from the dead:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "WARNING WARNING WARNING\n";
  print "this will remove all entries in your LiveJournal account\n";
@@ -1095,6 +1153,8 @@ L<Net::LiveJournal>,
 L<LJ::Simple>
 
 =back
+
+=cut
 
 =head1 AUTHOR
 

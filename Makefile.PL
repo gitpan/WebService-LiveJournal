@@ -27,14 +27,13 @@ my %WriteMakefileArgs = (
     "RPC::XML::Client" => 0,
     "RPC::XML::ParserFactory" => 0,
     "base" => 0,
-    "constant" => 0,
     "overload" => 0
   },
   "TEST_REQUIRES" => {
     "Test::More" => 0,
     "Time::HiRes" => 0
   },
-  "VERSION" => "0.03",
+  "VERSION" => "0.04",
   "test" => {
     "TESTS" => "t/*.t"
   }

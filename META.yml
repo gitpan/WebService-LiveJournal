@@ -22,11 +22,10 @@ requires:
   RPC::XML::Client: 0
   RPC::XML::ParserFactory: 0
   base: 0
-  constant: 0
   overload: 0
   perl: v5.10.0
 resources:
   bugtracker: https://github.com/plicease/webservice-livejournal/issues
   homepage: http://perl.wdlabs.com/WebService-LiveJournal/
   repository: git://github.com/plicease/webservice-livejournal.git
-version: 0.03
+version: 0.04

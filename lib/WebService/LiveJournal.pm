@@ -6,7 +6,7 @@ use v5.10;
 use base qw( WebService::LiveJournal::Client );
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 sub _set_error
 {
@@ -27,7 +27,7 @@ WebService::LiveJournal - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -371,6 +371,42 @@ Returns your friend groups.  This comes as an instance of
 L<WebService::LiveJournal::FriendGroupList> that contains
 zero or more instances of L<WebService::LiveJournal::FriendGroup>.
 
+=head2 $client-E<gt>console_command( $command, @arguments )
+
+Execute the given console command with the given arguments on the
+LiveJournal server.  Returns the output as a list reference.
+Each element in the list represents a line out output and consists
+of a list reference containing the type of output and the text
+of the output.  For example:
+
+ my $ret = $client->console_command( 'print', 'hello world' );
+
+returns:
+
+ [
+   [ 'info',    "Welcome to 'print'!" ],
+   [ 'success', "hello world" ],
+ ]
+
+=head2 $client-E<gt>batch_console_commands( $command1, $callback, [ $command2, $callback, [ ... ] )
+
+Execute a list of commands on the LiveJournal server in one request. Each command is a list reference. Each callback 
+associated with each command will be called with the results of that command (in the same format returned by 
+C<console_command> mentioned above, except it is passed in as a list instead of a list reference).  Example:
+
+ $client->batch_console_commands(
+   [ 'print', 'something to print' ],
+   sub {
+     my @output = @_;
+     ...
+   },
+   [ 'print', 'something else to print' ],
+   sub {
+     my @output = @_;
+     ...
+   },
+ );
+
 =head2 $client-E<gt>set_cookie( $key => $value )
 
 This method allows you to set a cookie for the appropriate security and expiration information.
@@ -418,7 +454,7 @@ LiveJournal server:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "user: ";
  my $user = <STDIN>;
@@ -449,7 +485,7 @@ LiveJournal:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "user: ";
  my $user = <STDIN>;
@@ -491,7 +527,7 @@ entries are removed they cannot be brought back from the dead:
 
  use strict;
  use warnings;
- use WebService::LiveJournal::Client;
+ use WebService::LiveJournal;
  
  print "WARNING WARNING WARNING\n";
  print "this will remove all entries in your LiveJournal account\n";
@@ -555,6 +591,8 @@ L<Net::LiveJournal>,
 L<LJ::Simple>
 
 =back
+
+=cut
 
 =head1 AUTHOR
 

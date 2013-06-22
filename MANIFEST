@@ -25,6 +25,7 @@ lib/WebService/LiveJournal/List.pm
 lib/WebService/LiveJournal/RPC.pm
 lib/WebService/LiveJournal/Thingie.pm
 t/live-badlogin.t
+t/live-consolecommand.t
 t/live-friend_of.t
 t/live-friends.t
 t/live-getevents.t
@@ -35,6 +36,7 @@ t/live-syncitems.t
 t/live-tag.t
 t/use.t
 xt/release/build_environment.t
+xt/release/changes.t
 xt/release/eol.t
 xt/release/fixme.t
 xt/release/no_tabs.t

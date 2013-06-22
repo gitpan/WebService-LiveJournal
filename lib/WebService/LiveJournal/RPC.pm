@@ -10,7 +10,7 @@ our @ISA = qw/ Exporter /;
 our @EXPORT_OK = qw/ xml2hashref xml2hash /;
 
 # ABSTRACT: RPC utilities for WebService::LiveJournal
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 my $parser = new RPC::XML::ParserFactory;
 
@@ -36,11 +36,13 @@ WebService::LiveJournal::RPC - RPC utilities for WebService::LiveJournal
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SEE ALSO
 
 L<WebService::LiveJournal>
+
+=cut
 
 =head1 AUTHOR
 
