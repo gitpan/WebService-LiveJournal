@@ -7,7 +7,7 @@ use WebService::LiveJournal::Thingie;
 our @ISA = qw/ WebService::LiveJournal::Thingie /;
 
 # ABSTRACT: LiveJournal event class
-our $VERSION = '0.04'; # VERSION
+our $VERSION = '0.05'; # VERSION
 
 
 # crib sheet based on stuff i read in the doco may be
@@ -475,7 +475,7 @@ WebService::LiveJournal::Event - LiveJournal event class
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

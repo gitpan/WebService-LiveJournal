@@ -9,6 +9,7 @@ Makefile.PL
 README
 README.pod
 dist.ini
+example/console.pl
 example/login.pl
 example/post.pl
 example/remove_all_entries.pl

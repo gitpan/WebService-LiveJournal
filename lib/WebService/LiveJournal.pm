@@ -6,7 +6,7 @@ use v5.10;
 use base qw( WebService::LiveJournal::Client );
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.04'; # VERSION
+our $VERSION = '0.05'; # VERSION
 
 sub _set_error
 {
@@ -27,7 +27,7 @@ WebService::LiveJournal - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
@@ -494,7 +494,6 @@ LiveJournal:
  my $password = <STDIN>;
  chomp $password;
  
- 
  my $client = WebService::LiveJournal->new(
    server => 'www.livejournal.com',
    username => $user,
@@ -563,6 +562,52 @@ entries are removed they cannot be brought back from the dead:
  }
  
  print "$count entries deleted\n";
+
+Here is a really simple command line interface to the LiveJournal
+admin console.  Obvious improvements like better parsing of the commands
+and not displaying the password are left as an exercise to the reader.
+
+ use strict;
+ use warnings;
+ use WebService::LiveJournal;
+ 
+ my $client = WebService::LiveJournal->new(
+   server => 'www.livejournal.com',
+   username => do {
+     print "user: ";
+     my $user = <STDIN>;
+     chomp $user;
+     $user;
+   },
+   password => do {
+     print "pass: ";
+     my $pass = <STDIN>;
+     chomp $pass;
+     $pass;
+   },
+ );
+ 
+ while(1)
+ {
+   print "> ";
+   my $command = <STDIN>;
+   unless(defined $command)
+   {
+     print "\n";
+     last;
+   }
+   chomp $command;
+   $client->batch_console_commands(
+     [ split /\s+/, $command ],
+     sub {
+       foreach my $line (@_)
+       {
+         my($type, $text) = @$line;
+         printf "%8s : %s\n", $type, $text;
+       }
+     }
+   );
+ }
 
 =head1 HISTORY
 
