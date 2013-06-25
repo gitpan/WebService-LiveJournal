@@ -11,10 +11,11 @@ use WebService::LiveJournal::FriendList;
 use WebService::LiveJournal::FriendGroupList;
 use WebService::LiveJournal::Event;
 use WebService::LiveJournal::EventList;
+use WebService::LiveJournal::Tag;
 use HTTP::Cookies;
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 
 my $zero = new RPC::XML::int(0);
@@ -306,6 +307,18 @@ sub get_friend_groups
 sub getfriendgroups { shift->get_friend_groups(@_) }
 
 
+sub get_user_tags
+{
+  my($self, $journal_name) = @_;
+  my @request = ('getusertags');
+  push @request, usejournal => RPC::XML::string->new($journal_name)
+    if defined $journal_name;
+  my $response = $self->send_request(@request);
+  return unless defined $response;
+  return map { WebService::LiveJournal::Tag->new($_) } @{ $response->value->{tags} };
+}
+
+
 sub console_command
 {
   my $self = shift;
@@ -592,7 +605,7 @@ WebService::LiveJournal::Client - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -935,6 +948,12 @@ If set to a numeric value greater than zero, this mode will only return the numb
 Returns your friend groups.  This comes as an instance of
 L<WebService::LiveJournal::FriendGroupList> that contains
 zero or more instances of L<WebService::LiveJournal::FriendGroup>.
+
+=head2 $client-E<gt>get_user_tags( [ $journal_name ] )
+
+Fetch the tags associated with the given journal, or the users journal
+if not specified.  This method returns a list of zero or more
+L<WebService::LiveJournal::Tag> objects.
 
 =head2 $client-E<gt>console_command( $command, @arguments )
 

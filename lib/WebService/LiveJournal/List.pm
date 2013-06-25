@@ -5,7 +5,7 @@ use warnings;
 use overload '""' => sub { $_[0]->as_string }, '@{}' => sub { $_[0]->{list} };
 
 # ABSTRACT: List base class for WebService::LiveJournal
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 
 sub new
@@ -54,7 +54,7 @@ WebService::LiveJournal::List - List base class for WebService::LiveJournal
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 

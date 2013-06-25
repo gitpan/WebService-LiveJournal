@@ -7,7 +7,7 @@ use WebService::LiveJournal::Friend;
 our @ISA = qw/ WebService::LiveJournal::List /;
 
 # ABSTRACT: List of LiveJournal friends
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 
 sub init
@@ -70,7 +70,7 @@ WebService::LiveJournal::FriendList - List of LiveJournal friends
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 

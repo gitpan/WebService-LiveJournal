@@ -24,12 +24,14 @@ lib/WebService/LiveJournal/FriendGroupList.pm
 lib/WebService/LiveJournal/FriendList.pm
 lib/WebService/LiveJournal/List.pm
 lib/WebService/LiveJournal/RPC.pm
+lib/WebService/LiveJournal/Tag.pm
 lib/WebService/LiveJournal/Thingie.pm
 t/live-badlogin.t
 t/live-consolecommand.t
 t/live-friend_of.t
 t/live-friends.t
 t/live-getevents.t
+t/live-getusertags.t
 t/live-login.t
 t/live-picture.t
 t/live-postevent.t

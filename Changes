@@ -1,5 +1,8 @@
 Revision history for WebService-LiveJournal
 
+0.06      2013-06-25 16:08:36 EST5EDT
+  - Add get_user_tags method
+
 0.05      2013-06-22 15:19:32 EST5EDT
   - Documentation
 

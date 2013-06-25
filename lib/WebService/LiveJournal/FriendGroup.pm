@@ -6,7 +6,7 @@ use WebService::LiveJournal::Thingie;
 our @ISA = qw/ WebService::LiveJournal::Thingie /;
 
 # ABSTRACT: LiveJournal friend group class
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 
 sub new
@@ -57,7 +57,7 @@ WebService::LiveJournal::FriendGroup - LiveJournal friend group class
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
