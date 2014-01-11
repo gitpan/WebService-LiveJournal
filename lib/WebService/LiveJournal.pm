@@ -6,7 +6,7 @@ use v5.10;
 use base qw( WebService::LiveJournal::Client );
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 sub _set_error
 {
@@ -21,13 +21,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 WebService::LiveJournal - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

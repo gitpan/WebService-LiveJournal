@@ -5,7 +5,7 @@ use warnings;
 use overload '""' => sub { $_[0]->as_string };
 
 # ABSTRACT: base class for WebService::LiveJournal classes
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 sub client
 {
@@ -22,13 +22,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 WebService::LiveJournal::Thingie - base class for WebService::LiveJournal classes
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SEE ALSO
 

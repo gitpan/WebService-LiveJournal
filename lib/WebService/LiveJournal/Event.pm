@@ -7,7 +7,7 @@ use WebService::LiveJournal::Thingie;
 our @ISA = qw/ WebService::LiveJournal::Thingie /;
 
 # ABSTRACT: LiveJournal event class
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 
 # crib sheet based on stuff i read in the doco may be
@@ -293,7 +293,7 @@ sub _fill_in_default_time
   &&        defined $self->{min};
   my ($sec,$min,$hour,$mday,$month,$year,$wday,$yday,$isdst) = localtime(time);
   $self->{year}  //= $year+1900;
-  $self->{month} //= $month;
+  $self->{month} //= $month+1;
   $self->{day}   //= $mday;
   $self->{hour}  //= $hour;
   $self->{min}   //= $min;
@@ -470,13 +470,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 WebService::LiveJournal::Event - LiveJournal event class
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

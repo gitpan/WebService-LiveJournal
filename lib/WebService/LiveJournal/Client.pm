@@ -15,7 +15,7 @@ use WebService::LiveJournal::Tag;
 use HTTP::Cookies;
 
 # ABSTRACT: Interface to the LiveJournal API
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 
 my $zero = new RPC::XML::int(0);
@@ -441,8 +441,21 @@ sub send_request
       ),
   );
 
+  #use Test::More;
+  #use XML::LibXML;
+  #use XML::LibXML::PrettyPrint;
+  #my $xml = XML::LibXML->new->parse_string($request->as_string);
+  #my $pp = XML::LibXML::PrettyPrint->new(indent_string => '  ')->pretty_print($xml);
+  #note 'send request:';
+  #note $xml->toString;
 
   my $response = $self->{client}->send_request($request);
+  
+  #my $xml = XML::LibXML->new->parse_string($response->as_string);
+  #my $pp = XML::LibXML::PrettyPrint->new(indent_string => '  ')->pretty_print($xml);
+  #note 'recv response:';
+  #note $xml->toString;
+  
   if(ref $response)
   {
     if($response->is_fault)
@@ -475,10 +488,11 @@ sub _post
   my $self = shift;
   my $ua = $self->{client}->useragent;
   my %arg = @_;
-  #print "====\nOUT:\n";
+  #use Test::More;
+  #note "====\nOUT:\n";
   #foreach my $key (keys %arg)
   #{
-  #  print "$key=$arg{$key}\n";
+  #  note "$key=$arg{$key}\n";
   #}
   my $http_response = $ua->post($self->{flat_url}, \@_);
   return $self->_set_error("HTTP Error: " . $http_response->status_line) unless $http_response->is_success;
@@ -486,12 +500,12 @@ sub _post
   my $response_text = $http_response->content;
   my @list = split /\n/, $response_text;
   my %h;
-  #print "====\nIN:\n";
+  #note "====\nIN:\n";
   while(@list > 0)
   {
     my $key = shift @list;
     my $value = shift @list;
-    #print "$key=$value\n";
+    #note "$key=$value\n";
     $h{$key} = $value;
   }
   
@@ -599,13 +613,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 WebService::LiveJournal::Client - Interface to the LiveJournal API
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
